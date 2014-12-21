@@ -6,7 +6,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.view.animation.AlphaAnimation;
 import android.widget.LinearLayout;
@@ -24,7 +26,9 @@ import com.atguigu.ms_git.util.MSUtils;
  * 
  */
 /**
- * 1. 整个界面显示一个透明度动画(持续3s, 从完全不透明到完全透明) 2. 显示手机中的当前应用的版本号 3.应用版本更新检查
+ * 1. 整个界面显示一个透明度动画(持续3s, 从完全不透明到完全透明) 
+ * 2. 显示手机中的当前应用的版本号 
+ * 3.应用版本更新检查
  */
 public class WelcomeActivity extends Activity {
 
@@ -95,7 +99,9 @@ public class WelcomeActivity extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						toMain();
 					}
-				}).show();
+				})
+				.setCancelable(false)
+				.show();
 	}
 
 	/**
@@ -130,7 +136,11 @@ public class WelcomeActivity extends Activity {
 	 * 显示一个dialog提示下载
 	 */
 	private void showDownloadProgress() {
-		
+		pd = new ProgressDialog(this);
+		pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+		pd.setTitle("下载更新");
+		pd.setCancelable(false);
+		pd.show();
 	}
 
 	/**
@@ -138,8 +148,15 @@ public class WelcomeActivity extends Activity {
 	 * @return
 	 */
 	private File createApkFile() {
-		
-		return null;
+		File file = null;
+		if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
+			File dir = getExternalFilesDir(null);
+			file = new File(dir, "Security.apk");
+		} else {
+			File dir = getFilesDir();
+			file = new File(dir, "Security.apk");
+		}
+		return file;
 	}
 
 	/*
@@ -186,11 +203,12 @@ public class WelcomeActivity extends Activity {
 		}).start();
 	}
 
-	/*
+	/**
 	 * 进入主界面
 	 */
 	private void toMain() {
-
+		finish();
+		startActivity(new Intent(this, MainActivity.class));
 	}
 
 	/**

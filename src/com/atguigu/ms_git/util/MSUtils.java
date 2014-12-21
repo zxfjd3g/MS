@@ -1,6 +1,9 @@
 package com.atguigu.ms_git.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -78,5 +81,24 @@ public final class MSUtils {
 		intent.setAction(Intent.ACTION_VIEW);
 		intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
 		context.startActivity(intent);
+	}
+
+	/**
+	 * 将一个inputStream读取成一个字符串
+	 * 
+	 * @param is
+	 * @return
+	 * @throws IOException
+	 */
+	public static String readString(InputStream is) throws IOException {
+		ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		byte[] buffer = new byte[1024];
+		int len = -1;
+		while ((len = is.read(buffer)) > 0) {
+			bos.write(buffer, 0, len);
+		}
+		bos.close();
+
+		return bos.toString();
 	}
 }

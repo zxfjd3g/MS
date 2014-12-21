@@ -14,6 +14,17 @@ public class UpdateInfo {
 	private String apkUrl;
 	private String desc;
 
+	public UpdateInfo() {
+		super();
+	}
+
+	public UpdateInfo(String version, String apkUrl, String desc) {
+		super();
+		this.version = version;
+		this.apkUrl = apkUrl;
+		this.desc = desc;
+	}
+
 	public String getVersion() {
 		return version;
 	}
