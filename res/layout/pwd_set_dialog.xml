@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dip"
+    android:layout_height="230dip"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setPassword"
+        android:textSize="24sp" 
+        android:textColor="#000000"/>
+
+    <LinearLayout
+        android:layout_width="300dip"
+        android:layout_height="200dip"
+        android:background="#ffc8c8c8"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setPasswordDescription"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/et_pwd_set_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/againPassword"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/et_pwd_set_confirm_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="300dip"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btn_pwd_set_yes"
+                android:layout_width="140dip"
+                android:layout_height="40dip"
+                android:text="@string/protectedYes" />
+            <Button
+                android:id="@+id/btn_pwd_set_no"
+                android:layout_width="140dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="10dip"
+                android:text="@string/protectedNo" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
