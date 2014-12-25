@@ -10,6 +10,9 @@ public class SpUtils {
 	public static final String NUMBER = "number";
 	public static final String LOST_LOCATION = "lostLocation";
 	public static final String SET_UP = "setUp";
+	public static final String BG_COLOR_INDEX = "bgColorIndex";
+	public static final String LOCATION_X = "location_x";
+	public static final String LOCATION_Y = "location_y";
 
 	private static SharedPreferences sp;
 	private static SpUtils instance = new SpUtils();

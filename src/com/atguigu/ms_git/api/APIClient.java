@@ -99,11 +99,11 @@ public class APIClient {
 	 * 下载apk, 保存到指定文件中, 并显示下载进度
 	 * 
 	 * @param apkUrl
-	 * @param apkFile
+	 * @param file
 	 * @param pd
 	 * @throws Exception
 	 */
-	public static void downloadAPK(String apkUrl, File apkFile, ProgressDialog pd) throws Exception {
+	public static void downloadFile(String apkUrl, File file, ProgressDialog pd) throws Exception {
 		Log.i("TAG", "apkUrl=" + apkUrl);
 		URL url = new URL(apkUrl);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -116,14 +116,14 @@ public class APIClient {
 			int total = connection.getContentLength();
 			Log.e("TAG", "total="+total);
 			pd.setMax(total);
-			OutputStream os = new FileOutputStream(apkFile);
+			OutputStream os = new FileOutputStream(file);
 			byte[] buffer = new byte[2048];
 			int len = -1;
 			while ((len = is.read(buffer)) > 0) {
 				os.write(buffer, 0, len);
 				pd.incrementProgressBy(len);
 				//模拟网速慢
-				Thread.sleep(100);
+				//Thread.sleep(100);
 			}
 			os.close();
 			is.close();

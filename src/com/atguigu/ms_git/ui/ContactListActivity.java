@@ -18,7 +18,11 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.atguigu.ms_git.R;
-
+/**
+ * 联系人列表
+ * @author xfzhang
+ *
+ */
 public class ContactListActivity extends Activity implements OnItemClickListener {
 
 	private ListView lv_person_list;

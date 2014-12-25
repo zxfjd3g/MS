@@ -75,8 +75,19 @@
             android:name="com.atguigu.ms_git.ui.SetupGuide4Activity"
             android:label="@string/setupGuide" >
         </activity>
+        
         <activity android:name="com.atguigu.ms_git.ui.ContactListActivity" >
         </activity>
+        
+        <activity android:name="com.atguigu.ms_git.ui.AToolActivity" >
+        </activity>
+        <activity android:name="com.atguigu.ms_git.ui.DragViewActivity" 
+            	android:theme="@android:style/Theme.Translucent">
+        </activity>
+        <activity android:name="com.atguigu.ms_git.ui.QueryAddressActivity" >
+        </activity>
+        
+		<service android:name="com.atguigu.ms_git.service.NumberAddressService"/>        
 		
 		<!-- 接收到短信 -->
         <receiver android:name=".receiver.SmsReceiver" >

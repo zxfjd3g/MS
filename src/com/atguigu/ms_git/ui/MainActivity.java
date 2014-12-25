@@ -1,9 +1,5 @@
 package com.atguigu.ms_git.ui;
 
-import com.atguigu.ms_git.R;
-import com.atguigu.ms_git.adapter.MainAdapter;
-import com.atguigu.ms_git.util.MSUtils;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,6 +14,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.GridView;
+
+import com.atguigu.ms_git.R;
+import com.atguigu.ms_git.adapter.MainAdapter;
+import com.atguigu.ms_git.util.MSUtils;
 
 /**
  * 主界面
@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			startActivity(new Intent(this, LostProtectActivity.class));
 			break;
 		case 1: // 通讯卫士
-
+			
 			break;
 		case 2: // 软件管理
 
@@ -77,7 +77,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 
 			break;
 		case 7:// 高级工具
-
+			startActivity(new Intent(this, AToolActivity.class));
 			break;
 		case 8: // 设置中心
 

@@ -122,7 +122,7 @@ public class WelcomeActivity extends Activity {
 			@Override
 			public void run() {
 				try {
-					APIClient.downloadAPK(apkUrl, apkFile, pd);
+					APIClient.downloadFile(apkUrl, apkFile, pd);
 					handler.sendEmptyMessage(DOWNLOAD_APK_SUCCESS);
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -46,4 +46,16 @@
     
     <string name="safe_number">手机安全号码为: %1$s</string>
     <string name="rePlayGuide">重新进入设置向导</string>
+    
+    <!-- 高级工具 -->
+    <string name="atool">高级工具</string>
+    <string name="query">手机号码归属地查询</string>
+    <string name="bt_query">查询</string>
+    <string name="queryNumber">号码归属地查询</string>
+    <string name="number_service">设置手机归属地服务</string>
+    <string name="number_service_state_no">归属地服务未开启</string>
+    <string name="number_service_state_yes">归属地服务已开启</string>
+    <string name="select_bg">归属地显示风格</string>
+    <string name="number_display">归属地显示位置</string>
+    <string name="drag_view_desc">拖动紫色方块来确定归属地显示位置</string>
 </resources>
