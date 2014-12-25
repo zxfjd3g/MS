@@ -23,10 +23,12 @@ import com.atguigu.ms_git.service.NumberAddressService;
 import com.atguigu.ms_git.util.Constant;
 import com.atguigu.ms_git.util.MSUtils;
 import com.atguigu.ms_git.util.SpUtils;
+
 /**
  * 高级工具
+ * 
  * @author xfzhang
- *
+ * 
  */
 public class AToolActivity extends Activity implements OnClickListener {
 
@@ -64,6 +66,14 @@ public class AToolActivity extends Activity implements OnClickListener {
 		tv_atool_number_service_state = (TextView) findViewById(R.id.tv_atool_number_service_state);
 		cb_atool_state = (CheckBox) findViewById(R.id.cb_atool_state);
 
+		boolean worked = MSUtils.isServiceWorked(this, NumberAddressService.class);
+		if (worked) {
+			cb_atool_state.setChecked(true);
+			// 更新界面
+			tv_atool_number_service_state.setText(R.string.number_service_state_yes);
+			tv_atool_number_service_state.setTextColor(Color.BLACK);
+		}
+
 		// 第三行
 		tv_atool_select_bg = (TextView) findViewById(R.id.tv_atool_select_bg);
 		tv_atool_select_bg.setOnClickListener(this);
@@ -71,7 +81,7 @@ public class AToolActivity extends Activity implements OnClickListener {
 		// 第四行
 		tv_atool_change_location = (TextView) findViewById(R.id.tv_atool_change_location);
 		tv_atool_change_location.setOnClickListener(this);
-		
+
 		serviceIntent = new Intent(this, NumberAddressService.class);
 	}
 
@@ -87,23 +97,19 @@ public class AToolActivity extends Activity implements OnClickListener {
 			startActivity(new Intent(this, DragViewActivity.class));
 		}
 	}
-	
+
 	/**
 	 * 设置归属地提示视图的背景颜色样式
 	 */
 	private void setStyle() {
-		String[] items = {"半透明", "活力橙", "苹果绿", "孔雀蓝", "金属灰"};
-		new AlertDialog.Builder(this)
-			.setTitle("选择颜色")
-			.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					SpUtils.getInstance(AToolActivity.this)
-						.putInt(SpUtils.BG_COLOR_INDEX, which);
-				}
-			})
-			.setPositiveButton(android.R.string.ok, null)
-			.show();
+		String[] items = { "半透明", "活力橙", "苹果绿", "孔雀蓝", "金属灰" };
+		new AlertDialog.Builder(this).setTitle("选择颜色")
+				.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						SpUtils.getInstance(AToolActivity.this).putInt(SpUtils.BG_COLOR_INDEX, which);
+					}
+				}).setPositiveButton(android.R.string.ok, null).show();
 	}
 
 	/**

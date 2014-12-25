@@ -4,16 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/tv_main_title"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/app_name" 
-        android:gravity="center"
-        android:textSize="20sp"
-        android:background="#ffbc04e5"
-        android:textColor="#ffffff"/>
-    
+    <include layout="@layout/title" 
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"/>
+
     <GridView
         android:id="@+id/gv_main"
         android:layout_width="match_parent"
@@ -21,4 +15,5 @@
         android:numColumns="3"
         android:verticalSpacing="8dip" >
     </GridView>
+
 </LinearLayout>

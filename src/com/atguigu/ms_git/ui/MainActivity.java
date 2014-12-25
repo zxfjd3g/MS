@@ -59,7 +59,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			startActivity(new Intent(this, LostProtectActivity.class));
 			break;
 		case 1: // 通讯卫士
-			
+			startActivity(new Intent(this, NumberSecurityActivity.class));
 			break;
 		case 2: // 软件管理
 

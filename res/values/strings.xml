@@ -58,4 +58,10 @@
     <string name="select_bg">归属地显示风格</string>
     <string name="number_display">归属地显示位置</string>
     <string name="drag_view_desc">拖动紫色方块来确定归属地显示位置</string>
+    
+    <!-- 通信卫士 -->
+    <string name="numberSecurity">通信卫士</string>
+    <string name="add">添加一个新的黑名单</string>
+    <string name="update_number">修改黑名单</string>
+    <string name="delete_number">删除黑名单</string>
 </resources>

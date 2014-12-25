@@ -1,10 +1,20 @@
 package com.atguigu.ms_git.service;
 
+import java.lang.reflect.Method;
+
+import android.annotation.TargetApi;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.graphics.PixelFormat;
+import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.provider.CallLog;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.view.Gravity;
@@ -13,15 +23,21 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.android.internal.telephony.ITelephony;
 import com.atguigu.ms_git.R;
 import com.atguigu.ms_git.engin.AddressService;
+import com.atguigu.ms_git.ui.NumberSecurityActivity;
 import com.atguigu.ms_git.util.SpUtils;
+import com.atguigu.security.dao.BlackNumberDao;
 
 public class NumberAddressService extends Service {
 
 	private WindowManager windowManager;
 	private TelephonyManager telephonyManager;
 	private View addressView;
+	private BlackNumberDao dao;
+	private long startTime;
+	private long endTime;
 
 	private PhoneStateListener listener = new PhoneStateListener() {
 		public void onCallStateChanged(int state, String incomingNumber) {
@@ -35,9 +51,21 @@ public class NumberAddressService extends Service {
 			switch (state) {
 			case TelephonyManager.CALL_STATE_IDLE: // 来电前或挂断电话后
 				removeAdressView();
+				endTime = System.currentTimeMillis();
+				if (endTime > startTime && endTime < startTime + 2000) {// 可以是骚扰电话
+					showNotification(incomingNumber);
+				}
 				break;
 			case TelephonyManager.CALL_STATE_RINGING: // 响铃中
-				showAddress(incomingNumber);
+				startTime = System.currentTimeMillis();
+				boolean isBlack = dao.isBlack(incomingNumber);
+				if (isBlack) {
+					endCall();
+					CallContentObserver observer = new CallContentObserver(new Handler(), incomingNumber);
+					getContentResolver().registerContentObserver(CallLog.Calls.CONTENT_URI, true, observer);
+				} else {
+					showAddress(incomingNumber);
+				}
 				break;
 			case TelephonyManager.CALL_STATE_OFFHOOK: // 通话中
 				removeAdressView();
@@ -139,6 +167,7 @@ public class NumberAddressService extends Service {
 	public void onCreate() {
 		super.onCreate();
 
+		dao = new BlackNumberDao(this);
 		windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		// Listen for changes to the device call state. 监听电话状态
@@ -153,4 +182,65 @@ public class NumberAddressService extends Service {
 		removeAdressView();
 	}
 
+	/**
+	 * 通过AIDL调用挂断电话
+	 */
+	private void endCall() {
+		try {
+			// 通过反射拿到android.os.ServiceManager里面的getService这个方法的对象
+			Class clazz = Class.forName("android.os.ServiceManager");
+			Method method = clazz.getMethod("getService", String.class);
+			// 通过反射调用这个getService方法，然后拿到IBinder对象，然后就可以进行aidl啦
+			IBinder iBinder = (IBinder) method.invoke(null, new Object[] { Context.TELEPHONY_SERVICE });
+			ITelephony telephony = ITelephony.Stub.asInterface(iBinder);
+			telephony.endCall();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 自定义通话记录观察者类
+	 * 
+	 */
+	private class CallContentObserver extends ContentObserver {
+
+		private String number;
+
+		public CallContentObserver(Handler handler, String number) {
+			super(handler);
+			this.number = number;
+		}
+
+		@Override
+		public void onChange(boolean selfChange) {
+			cleanCallLog(number);
+			getContentResolver().unregisterContentObserver(this);
+		}
+
+		/**
+		 * 删除通话记录
+		 * 
+		 * @param number2
+		 */
+		private void cleanCallLog(String number) {
+			getContentResolver().delete(CallLog.Calls.CONTENT_URI, "number=?", new String[] { number });
+		}
+	}
+
+	/**
+	 * 显示骚扰电话的通知
+	 * 
+	 * @param number
+	 */
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+	private void showNotification(String number) {
+		NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		Intent intent = new Intent(this, NumberSecurityActivity.class);
+		intent.putExtra("number", number);
+		PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+		Notification notification = new Notification.Builder(this).setContentIntent(pendingIntent)
+				.setContentTitle("发现响一声电话!").setSmallIcon(R.drawable.logo).setAutoCancel(false).build();
+		manager.notify(0, notification);
+	}
 }

@@ -4,8 +4,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -22,6 +25,7 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.atguigu.ms_git.receiver.MyAdminReceiver;
+import com.atguigu.ms_git.service.NumberAddressService;
 
 /**
  * 工具帮助类
@@ -172,5 +176,24 @@ public final class MSUtils {
 			intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
 			context.startActivity(intent);
 		}
+	}
+
+	/**
+	 * 判断某个service是否已经启动
+	 * @param context
+	 * @param c
+	 * @return
+	 */
+	public static boolean isServiceWorked(Context context, Class<NumberAddressService> c) {
+		String className = c.getName();
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningServiceInfo> list = activityManager.getRunningServices(30);
+		for (RunningServiceInfo info : list) {
+			String name = info.service.getClassName();
+			if (className.equals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

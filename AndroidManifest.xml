@@ -36,6 +36,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 接收粗略定位位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    
+    <!-- 读写通话记录: 用在删除通话记录 -->
+    <uses-permission android:name="android.permission.READ_CALL_LOG" />
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
+    <!-- 打电话的权限: 用于挂断电话 -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -85,6 +91,10 @@
             	android:theme="@android:style/Theme.Translucent">
         </activity>
         <activity android:name="com.atguigu.ms_git.ui.QueryAddressActivity" >
+        </activity>
+        
+        <activity android:name="com.atguigu.ms_git.ui.NumberSecurityActivity" 
+            		android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         
 		<service android:name="com.atguigu.ms_git.service.NumberAddressService"/>        
