@@ -62,7 +62,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			startActivity(new Intent(this, NumberSecurityActivity.class));
 			break;
 		case 2: // 软件管理
-
+			startActivity(new Intent(this, AppManagerActivity.class));
 			break;
 		case 3: // 流量管理
 

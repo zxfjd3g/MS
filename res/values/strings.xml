@@ -13,7 +13,7 @@
     <string name="inputPassword">请输入密码</string>
 
     <!-- 手机防盗设置 -->
-    
+
     <string name="lost_protect">手机防盗</string>
     <string name="setupGuide">设置向导</string>
     <string name="guide1">1.欢迎使用手机防盗</string>
@@ -23,30 +23,25 @@
     <string name="guide1_item3">远程销毁数据</string>
     <string name="guide1_item4">远程锁屏</string>
     <string name="hello_world">设置向导</string>
-    
     <string name="guide2">2.手机卡绑定</string>
     <string name="guide2_content">如果sim卡绑定，如果下次更换的话，就会自动发送短信</string>
     <string name="guide2_unbound">没有绑定, 可勾选绑定</string>
     <string name="guide2_bounded">已经绑定, 可去除绑定</string>
-    
     <string name="guide3">3.设置安全号码</string>
     <string name="guide3_content">如果sim卡更换后，会把短信发送到该号码上</string>
     <string name="guide3_item1">请输入或选择一个手机安全号码</string>
     <string name="guide3_item2">选择联系人</string>
-    
     <string name="guide4">4.恭喜你，设置已经完成</string>
     <string name="guide4_content">您的手机设置已经完成</string>
     <string name="guide4_item1">手机没有开启保护</string>
     <string name="guide4_item2">手机已经开启保护了</string>
     <string name="guide4_item3">强烈建议您开启保护, 是否完成设置</string>
-    
     <string name="next">下一步</string>
     <string name="pre">上一步</string>
     <string name="finish">完成</string>
-    
     <string name="safe_number">手机安全号码为: %1$s</string>
     <string name="rePlayGuide">重新进入设置向导</string>
-    
+
     <!-- 高级工具 -->
     <string name="atool">高级工具</string>
     <string name="query">手机号码归属地查询</string>
@@ -58,10 +53,20 @@
     <string name="select_bg">归属地显示风格</string>
     <string name="number_display">归属地显示位置</string>
     <string name="drag_view_desc">拖动紫色方块来确定归属地显示位置</string>
-    
+
     <!-- 通信卫士 -->
     <string name="numberSecurity">通信卫士</string>
     <string name="add">添加一个新的黑名单</string>
     <string name="update_number">修改黑名单</string>
     <string name="delete_number">删除黑名单</string>
+
+    <!-- 应用管理 -->
+    <string name="app_manager">应用管理</string>
+    <string name="app_manager_all">所有应用</string>
+    <string name="app_manager_customer">用户应用</string>
+    <string name="app_manager_load">正在加载中</string>
+    <string name="app_manager_delete">卸载</string>
+    <string name="app_manager_run">运行</string>
+    <string name="app_manager_share">分享</string>
+
 </resources>

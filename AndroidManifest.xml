@@ -97,6 +97,10 @@
             		android:theme="@android:style/Theme.Light.NoTitleBar">
         </activity>
         
+        <activity android:name="com.atguigu.ms_git.ui.AppManagerActivity" 
+            		android:theme="@android:style/Theme.Light.NoTitleBar">
+        </activity>
+        
 		<service android:name="com.atguigu.ms_git.service.NumberAddressService"/>        
 		
 		<!-- 接收到短信 -->

@@ -4,7 +4,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
@@ -13,9 +16,12 @@ import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
+import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,6 +30,7 @@ import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
+import com.atguigu.ms_git.bean.AppInfo;
 import com.atguigu.ms_git.receiver.MyAdminReceiver;
 import com.atguigu.ms_git.service.NumberAddressService;
 
@@ -195,5 +202,53 @@ public final class MSUtils {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * 得到所有应用信息的列表
+	 * @param context
+	 * @return
+	 * @throws Exception
+	 */
+	public static Map<Boolean, List<AppInfo>> getAllAppInfos(Context context) throws Exception {
+
+		Map<Boolean, List<AppInfo>> map = new HashMap<Boolean, List<AppInfo>>();
+		List<AppInfo> allInfos = new ArrayList<AppInfo>();
+		map.put(true, allInfos);
+		List<AppInfo> customerInfos = new ArrayList<AppInfo>();// 只存储非系统的第三方应用
+		map.put(false, customerInfos);
+
+		PackageManager packageManager = context.getPackageManager();
+
+		Intent intent = new Intent();
+		intent.setAction(Intent.ACTION_MAIN);
+		intent.addCategory(Intent.CATEGORY_LAUNCHER);
+		List<ResolveInfo> ResolveInfos = packageManager.queryIntentActivities(intent, 0);
+		for (ResolveInfo ri : ResolveInfos) {
+			String packageName = ri.activityInfo.packageName;
+			Drawable icon = ri.loadIcon(packageManager);
+			String appName = ri.loadLabel(packageManager).toString();
+			boolean isSystemApp = isSystemApp(packageManager, packageName);
+			AppInfo appInfo = new AppInfo(icon, appName, packageName, isSystemApp);
+			allInfos.add(appInfo);
+			if (!appInfo.isSystemApp()) {
+				customerInfos.add(appInfo);
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * 判断当前包所对应的应用是否是系统应用
+	 * 
+	 * @param packageName
+	 * @return
+	 * @throws NameNotFoundException
+	 */
+	private static boolean isSystemApp(PackageManager pm, String packageName) throws Exception {
+
+		PackageInfo packageInfo = pm.getPackageInfo(packageName, 0);
+
+		return (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
 	}
 }
