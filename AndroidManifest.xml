@@ -12,14 +12,30 @@
 
     <!-- 读取wifi状态的权限 -->
     <!-- <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> -->
-
-
     <!-- 请求网络的权限 -->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!-- sd卡操作的权限 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- 读取手机联系人 -->
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- 请求电话状态信息 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!-- 接收开机完成的广播 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!-- 发送短信 -->
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <!-- 接收短信的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+
+    <!-- 接收精确定位位置 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 接收粗略定位位置 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -41,8 +57,51 @@
             android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name="com.atguigu.ms_git.ui.LostProtectActivity"
-            android:label="@string/title_activity_lost_protect" >
+            android:label="@string/lost_protect" >
         </activity>
-    </application>
+        <activity
+            android:name="com.atguigu.ms_git.ui.SetupGuide1Activity"
+            android:label="@string/setupGuide" >
+        </activity>
+        <activity
+            android:name="com.atguigu.ms_git.ui.SetupGuide2Activity"
+            android:label="@string/setupGuide" >
+        </activity>
+        <activity
+            android:name="com.atguigu.ms_git.ui.SetupGuide3Activity"
+            android:label="@string/setupGuide" >
+        </activity>
+        <activity
+            android:name="com.atguigu.ms_git.ui.SetupGuide4Activity"
+            android:label="@string/setupGuide" >
+        </activity>
+        <activity android:name="com.atguigu.ms_git.ui.ContactListActivity" >
+        </activity>
+		
+		<!-- 接收到短信 -->
+        <receiver android:name=".receiver.SmsReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+        
+		<!-- 开机启动完成 -->
+        <receiver android:name=".receiver.BootCompleteReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
+        <!-- 激活设备管理 -->
+		<receiver
+		    android:name=".receiver.MyAdminReceiver"
+		    android:permission="android.permission.BIND_DEVICE_ADMIN" >
+		    <meta-data
+		        android:name="android.app.device_admin"
+		        android:resource="@xml/my_admin" />
+		    <intent-filter>
+		        <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+		    </intent-filter>
+		</receiver>
+    </application>
 </manifest>

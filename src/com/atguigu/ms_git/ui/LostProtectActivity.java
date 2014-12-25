@@ -3,16 +3,23 @@ package com.atguigu.ms_git.ui;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.atguigu.ms_git.R;
 import com.atguigu.ms_git.util.MSUtils;
+import com.atguigu.ms_git.util.SpUtils;
 
 /**
  * 手机防盗界面
@@ -23,11 +30,13 @@ import com.atguigu.ms_git.util.MSUtils;
 public class LostProtectActivity extends Activity implements OnClickListener {
 
 	private SharedPreferences sp;
+	private TextView tv_lost_protect_number;
+	private CheckBox cb_lost_protect_start;
+	private Button btn_lost_protect_reset;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_lost_protect);
 		init();
 	}
 
@@ -105,9 +114,12 @@ public class LostProtectActivity extends Activity implements OnClickListener {
 				return;
 			}
 			sp.edit().putString("protect_pwd", pwd).commit();
-			MSUtils.showMsg(this, "进入手机防盗设置流程!");
+			//MSUtils.showMsg(this, "进入手机防盗设置流程!");
+			startActivity(new Intent(this, SetupGuide1Activity.class));
+			pwdSetDialog.dismiss();
 			finish();
 		} else if (v == btn_pwd_set_no) {
+			pwdSetDialog.dismiss();
 			finish();
 		} else if (v == btn_pwd_login_yes) {
 			String protectPwd = sp.getString("protect_pwd", null);
@@ -116,9 +128,48 @@ public class LostProtectActivity extends Activity implements OnClickListener {
 				MSUtils.showMsg(this, "密码不正确!");
 				return;
 			}
-			MSUtils.showMsg(this, "进入手机防盗设置流程!");
-			finish();
+			boolean setup = SpUtils.getInstance(this).getBoolean(SpUtils.SET_UP, false);
+			pwdLoginDialog.dismiss();
+			if(!setup) {
+				startActivity(new Intent(this, SetupGuide1Activity.class));
+				finish();
+			} else {
+				setContentView(R.layout.activity_lost_protect);
+				tv_lost_protect_number = (TextView) findViewById(R.id.tv_lost_protect_number);
+				String number = SpUtils.getInstance(this).getString(SpUtils.NUMBER, null);
+				if(number!=null) {
+					tv_lost_protect_number.setText(getString(R.string.safe_number, number));
+				}
+				cb_lost_protect_start = (CheckBox) findViewById(R.id.cb_lost_protect_start);
+				boolean isProtected = SpUtils.getInstance(this).getBoolean(SpUtils.IS_PROTECTED, false);
+				if(isProtected) {
+					cb_lost_protect_start.setChecked(true);
+					cb_lost_protect_start.setText(R.string.guide4_item2);
+					cb_lost_protect_start.setTextColor(Color.BLACK);
+				}
+				cb_lost_protect_start.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+						if(isChecked) {
+							cb_lost_protect_start.setText(R.string.guide4_item2);
+							cb_lost_protect_start.setTextColor(Color.BLACK);
+						} else {
+							cb_lost_protect_start.setText(R.string.guide4_item1);
+							cb_lost_protect_start.setTextColor(Color.RED);
+						}
+					}
+				});
+				
+				findViewById(R.id.btn_lost_protect_reset).setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						startActivity(new Intent(LostProtectActivity.this, SetupGuide1Activity.class));
+						finish();
+					}
+				});
+			}
 		} else if (v == btn_pwd_login_no) {
+			pwdLoginDialog.dismiss();
 			finish();
 		}
 	}
