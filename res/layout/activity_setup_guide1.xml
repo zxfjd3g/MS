@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffbc04e5"
+    android:orientation="vertical" >
+
+   <include layout="@layout/guide_title"
+       	android:layout_width="fill_parent"
+       	android:layout_height="wrap_content"/>
+
+   <!--带星号图标的文本 -->
+    <TextView 
+        style="@style/SetupGuideContent"
+        android:text="@string/guide1_content"/>
+   
+    <TextView
+        style="@style/SetupGuideItem"
+        android:text="@string/guide1_item1" />
+    
+    <TextView
+        style="@style/SetupGuideItem"
+        android:text="@string/guide1_item2" />
+
+    <TextView
+        style="@style/SetupGuideItem"
+        android:text="@string/guide1_item3" />
+
+    <TextView
+        style="@style/SetupGuideItem"
+        android:text="@string/guide1_item4" />
+
+     <!-- 显示设置进度的图标 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dip"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/hello_world"
+            android:src="@android:drawable/presence_online" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/hello_world"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/hello_world"
+            android:src="@android:drawable/presence_invisible" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/hello_world"
+            android:src="@android:drawable/presence_invisible" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="5dp" >
+
+        <Button
+            style="@style/SetupGuideNext"
+            android:text="@string/next" 
+            android:onClick="nextGuide"/>
+    </RelativeLayout>
+</LinearLayout>
