@@ -13,6 +13,7 @@ public class SpUtils {
 	public static final String BG_COLOR_INDEX = "bgColorIndex";
 	public static final String LOCATION_X = "location_x";
 	public static final String LOCATION_Y = "location_y";
+	public static final String APP_LOCK = "app_lock";
 
 	private static SharedPreferences sp;
 	private static SpUtils instance = new SpUtils();

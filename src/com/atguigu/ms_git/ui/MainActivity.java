@@ -68,7 +68,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 
 			break;
 		case 4:// 任务管理
-
+			
 			break;
 		case 5: // 手机杀毒
 
@@ -80,7 +80,7 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			startActivity(new Intent(this, AToolActivity.class));
 			break;
 		case 8: // 设置中心
-
+			startActivity(new Intent(this, SettingActivity.class));
 			break;
 		default:
 			break;

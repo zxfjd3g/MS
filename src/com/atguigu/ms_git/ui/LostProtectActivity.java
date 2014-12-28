@@ -44,7 +44,7 @@ public class LostProtectActivity extends Activity implements OnClickListener {
 	 * 初始化
 	 */
 	private void init() {
-		sp = getSharedPreferences("security", Context.MODE_PRIVATE);
+		sp = getSharedPreferences("config", Context.MODE_PRIVATE);
 
 		String lostPwd = sp.getString("protect_pwd", null);
 		if (lostPwd == null) {// 还没有进行密码设置

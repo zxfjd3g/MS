@@ -3,10 +3,12 @@ package com.atguigu.ms_git.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.sax.StartElementListener;
 import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.atguigu.ms_git.service.AppLockMonitorService;
 import com.atguigu.ms_git.util.MSUtils;
 import com.atguigu.ms_git.util.SpUtils;
 
@@ -21,6 +23,13 @@ public class BootCompleteReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		Log.i("TAG", "BootCompleteReceiver onReceive()");
+		
+		boolean isAppLockStart = SpUtils.getInstance(context).getBoolean(SpUtils.APP_LOCK, false);
+		if (isAppLockStart) {
+			Intent service =  new Intent(context, AppLockMonitorService.class);
+			service.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			context.startService(service );
+		}
 		// 条件1: 启动了防盗监听
 		boolean isProtected = SpUtils.getInstance(context).getBoolean(SpUtils.IS_PROTECTED, false);
 		Log.i("TAG", "BootCompleteReceiver isProtected "+isProtected );

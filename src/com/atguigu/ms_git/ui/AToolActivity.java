@@ -47,6 +47,8 @@ public class AToolActivity extends Activity implements OnClickListener {
 
 	private Intent serviceIntent;
 
+	private TextView tv_atool_app_lock;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -83,6 +85,9 @@ public class AToolActivity extends Activity implements OnClickListener {
 		tv_atool_change_location.setOnClickListener(this);
 
 		serviceIntent = new Intent(this, NumberAddressService.class);
+
+		tv_atool_app_lock = (TextView) findViewById(R.id.tv_atool_app_lock);
+		tv_atool_app_lock.setOnClickListener(this);
 	}
 
 	@Override
@@ -95,6 +100,8 @@ public class AToolActivity extends Activity implements OnClickListener {
 			setStyle();
 		} else if (v == tv_atool_change_location) {
 			startActivity(new Intent(this, DragViewActivity.class));
+		} else if (v == tv_atool_app_lock) {
+			startActivity(new Intent(this, AppLockActivity.class));
 		}
 	}
 

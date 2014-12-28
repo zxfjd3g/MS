@@ -36,13 +36,16 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!-- 接收粗略定位位置 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    
+
     <!-- 读写通话记录: 用在删除通话记录 -->
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.WRITE_CALL_LOG" />
     <!-- 打电话的权限: 用于挂断电话 -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
 
+    <!-- 获取任务栈: 用于锁屏 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -81,36 +84,47 @@
             android:name="com.atguigu.ms_git.ui.SetupGuide4Activity"
             android:label="@string/setupGuide" >
         </activity>
-        
         <activity android:name="com.atguigu.ms_git.ui.ContactListActivity" >
         </activity>
-        
         <activity android:name="com.atguigu.ms_git.ui.AToolActivity" >
         </activity>
-        <activity android:name="com.atguigu.ms_git.ui.DragViewActivity" 
-            	android:theme="@android:style/Theme.Translucent">
+        <activity
+            android:name="com.atguigu.ms_git.ui.DragViewActivity"
+            android:theme="@android:style/Theme.Translucent" >
         </activity>
         <activity android:name="com.atguigu.ms_git.ui.QueryAddressActivity" >
         </activity>
-        
-        <activity android:name="com.atguigu.ms_git.ui.NumberSecurityActivity" 
-            		android:theme="@android:style/Theme.Light.NoTitleBar">
+        <activity
+            android:name="com.atguigu.ms_git.ui.NumberSecurityActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
-        <activity android:name="com.atguigu.ms_git.ui.AppManagerActivity" 
-            		android:theme="@android:style/Theme.Light.NoTitleBar">
+        <activity
+            android:name="com.atguigu.ms_git.ui.AppManagerActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
-        
-		<service android:name="com.atguigu.ms_git.service.NumberAddressService"/>        
-		
-		<!-- 接收到短信 -->
+        <activity
+            android:name="com.atguigu.ms_git.ui.AppLockActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name="com.atguigu.ms_git.ui.LockScreenActivity"
+            android:excludeFromRecents="true"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.SettingActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+
+        <service android:name="com.atguigu.ms_git.service.NumberAddressService" />
+        <service android:name=".service.AppLockMonitorService" />
+
+        <!-- 接收到短信 -->
         <receiver android:name=".receiver.SmsReceiver" >
             <intent-filter android:priority="1000" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
-        
-		<!-- 开机启动完成 -->
+
+        <!-- 开机启动完成 -->
         <receiver android:name=".receiver.BootCompleteReceiver" >
             <intent-filter android:priority="1000" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -118,15 +132,23 @@
         </receiver>
 
         <!-- 激活设备管理 -->
-		<receiver
-		    android:name=".receiver.MyAdminReceiver"
-		    android:permission="android.permission.BIND_DEVICE_ADMIN" >
-		    <meta-data
-		        android:name="android.app.device_admin"
-		        android:resource="@xml/my_admin" />
-		    <intent-filter>
-		        <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
-		    </intent-filter>
-		</receiver>
+        <receiver
+            android:name=".receiver.MyAdminReceiver"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
+                android:resource="@xml/my_admin" />
+            <intent-filter>
+                <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+        
+        <!-- 只能当前应用使用 exported="false" -->
+        <provider
+            android:name="com.atguigu.security.provider.ApplockProvider"
+            android:authorities="com.atguigu.security.provider.applockprovider"
+            android:exported="false" >
+        </provider>
     </application>
+
 </manifest>

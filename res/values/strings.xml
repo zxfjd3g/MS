@@ -68,5 +68,12 @@
     <string name="app_manager_delete">卸载</string>
     <string name="app_manager_run">运行</string>
     <string name="app_manager_share">分享</string>
+    
+    <!-- 程序锁 -->
+    <string name="app_lock">程序锁</string>
+    <string name="lock">密码输入</string>
+    <string name="setting">设置中心</string>
+    <string name="lock_service">设置程序锁服务</string>
+    <string name="lock_tips">程序锁服务未开启</string>
 
 </resources>
