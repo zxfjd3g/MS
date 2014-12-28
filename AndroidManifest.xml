@@ -7,6 +7,7 @@
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="18" />
+    
     <!-- 读取手机联网状态的权限 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -46,6 +47,12 @@
     <!-- 获取任务栈: 用于锁屏 -->
     <uses-permission android:name="android.permission.GET_TASKS" />
     
+    <!-- 杀死进程 -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+
+    <!-- 得到包的大小 -->
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logo"
@@ -113,9 +120,22 @@
         <activity
             android:name=".ui.SettingActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".ui.AppTaskManagerActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".ui.TrafficManagerActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar" />
+        <activity
+            android:name=".ui.OptimizeActivity"
+            android:label="@string/system_optimize"/>
+        <activity
+            android:name=".ui.CacheClearActivity"
+            android:theme="@android:style/Theme.Black.NoTitleBar"/>
 
         <service android:name="com.atguigu.ms_git.service.NumberAddressService" />
         <service android:name=".service.AppLockMonitorService" />
+        <service android:name=".service.UpdateWidgetService" />
 
         <!-- 接收到短信 -->
         <receiver android:name=".receiver.SmsReceiver" >
@@ -138,17 +158,28 @@
             <meta-data
                 android:name="android.app.device_admin"
                 android:resource="@xml/my_admin" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
             </intent-filter>
         </receiver>
-        
+
         <!-- 只能当前应用使用 exported="false" -->
         <provider
             android:name="com.atguigu.security.provider.ApplockProvider"
             android:authorities="com.atguigu.security.provider.applockprovider"
             android:exported="false" >
         </provider>
+        
+        <!-- 用来显示桌面widget -->
+        <receiver android:name="com.atguigu.ms_git.receiver.ProcessWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" /> <!-- 指定了的 -->
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/process_widget" /> <!-- 为上面指定了的widget -->
+        </receiver>
     </application>
 
 </manifest>

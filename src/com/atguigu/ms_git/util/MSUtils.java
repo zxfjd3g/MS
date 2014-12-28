@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.ActivityManager;
+import android.app.ActivityManager.MemoryInfo;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -187,6 +190,7 @@ public final class MSUtils {
 
 	/**
 	 * 判断某个service是否已经启动
+	 * 
 	 * @param context
 	 * @param c
 	 * @return
@@ -203,9 +207,10 @@ public final class MSUtils {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 得到所有应用信息的列表
+	 * 
 	 * @param context
 	 * @return
 	 * @throws Exception
@@ -250,5 +255,60 @@ public final class MSUtils {
 		PackageInfo packageInfo = pm.getPackageInfo(packageName, 0);
 
 		return (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) > 0;
+	}
+
+	/**
+	 * 将以内存大小值格式的友好的字符串
+	 * 
+	 * @param size
+	 * @return
+	 */
+	public static String formatMemorySize(long size) {
+		DecimalFormat formater = new DecimalFormat("####.00");
+		if (size < 1024) {
+			return size + "byte";
+		} else if (size < (1 << 20)) // 左移20位，相当于1024 * 1024
+		{
+			float kSize = size >> 10; // 右移10位，相当于除以1024
+			return formater.format(kSize) + "KB";
+		} else if (size < (1 << 30)) // 左移30位，相当于1024 * 1024 * 1024
+		{
+			float mSize = size >> 20; // 右移20位，相当于除以1024再除以1024
+			return formater.format(mSize) + "MB";
+		} else if (size < (1 << 40)) {
+			float gSize = size >> 30;
+			return formater.format(gSize) + "GB";
+		} else {
+			return "size : error";
+		}
+	}
+	
+	public static void killAllProcess(Context context) {
+		// 拿到这个包管理器
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		// 拿到所有正在运行的进程信息
+		List<RunningAppProcessInfo> list = activityManager.getRunningAppProcesses();
+		// 进行遍历，然后杀死它们
+		for (RunningAppProcessInfo runningAppProcessInfo : list) {
+			activityManager.killBackgroundProcesses(runningAppProcessInfo.processName);
+		}
+	}
+
+	public static String getProcessCount(Context context) {
+		// 拿到这个包管理器
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		// 拿到所有正在运行的进程信息
+		List<RunningAppProcessInfo> list = activityManager.getRunningAppProcesses();
+		return list.size() + "";
+	}
+
+	public static String getAvailMemory(Context context) {
+		// 拿到这个包管理器
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		// new一个内存的对象
+		MemoryInfo memoryInfo = new ActivityManager.MemoryInfo();
+		// 拿到现在系统里面的内存信息
+		activityManager.getMemoryInfo(memoryInfo);
+		return MSUtils.formatMemorySize(memoryInfo.availMem);
 	}
 }

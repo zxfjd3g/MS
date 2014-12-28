@@ -75,5 +75,24 @@
     <string name="setting">设置中心</string>
     <string name="lock_service">设置程序锁服务</string>
     <string name="lock_tips">程序锁服务未开启</string>
+    
+     <!-- 应用任务管理 -->
+    <string name="process_clear">一键清理</string>
+    <string name="process_memory">运行的进程数</string>
+    <string name="process_count">剩余内存/占用内存</string>
+    
+    <!-- 常用电话查询 -->
+    <string name="common_number">常用电话查询</string>
+    <string name="commonNumber">常用电话</string>
+    
+    <!-- 流量管理 -->
+    <string name="traffic_manager">流量管理</string>
+    <string name="traffic">00.00KB</string>
+    
+    <!-- 系统优化 -->
+    <string name="system_optimize">系统优化</string>
+    <string name="cache_clear">清理缓存</string>
+    <string name="dataSize">数据大小00.00KB</string>
+    
 
 </resources>

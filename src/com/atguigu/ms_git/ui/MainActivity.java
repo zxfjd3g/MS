@@ -65,16 +65,16 @@ public class MainActivity extends Activity implements OnItemClickListener, OnIte
 			startActivity(new Intent(this, AppManagerActivity.class));
 			break;
 		case 3: // 流量管理
-
+			startActivity(new Intent(this, TrafficManagerActivity.class));
 			break;
 		case 4:// 任务管理
-			
+			startActivity(new Intent(this, AppTaskManagerActivity.class));
 			break;
 		case 5: // 手机杀毒
 
 			break;
 		case 6: // 系统优化
-
+			startActivity(new Intent(this, OptimizeActivity.class));
 			break;
 		case 7:// 高级工具
 			startActivity(new Intent(this, AToolActivity.class));
